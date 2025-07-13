@@ -1,0 +1,42 @@
+# === PYTHON ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.Python
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+*.sqlite3
+*.db
+
+# === FASTAPI ===
+
+app.db
+
+# === MACOS ===
+.DS_Store
+
+# === XCODE / SWIFT ===
+DerivedData/
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+*.xcuserdatad
+*.xcscmblueprint
+*.xcodeproj/xcuserdata/
+*.xcodeproj/xcshareddata/
+*.xcodeproj/xcshareddata/WorkspaceSettings.xcsettings
+
+# === BUILD FILES ===
+build/
+*.app
+*.ipa
+
+# === GIT ===
+*.log
+*.swp
