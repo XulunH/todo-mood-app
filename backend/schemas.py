@@ -1,6 +1,18 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional
 from datetime import date
+from enum import Enum
+
+# ---------- mood enum ----------
+
+class MoodEnum(str, Enum):
+    happy     = "happy"
+    sad       = "sad"
+    angry     = "angry"
+    excited   = "excited"
+    calm      = "calm"
+    tired     = "tired"
+    stressed  = "stressed"
 
 # ---------- auth ----------
 
@@ -11,14 +23,7 @@ class UserCreate(BaseModel):
 class UserOut(BaseModel):
     id: int
     email: EmailStr
-    class Config: orm_mode = True
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-
-class TokenData(BaseModel):
-    user_id: Optional[int] = None
+    class Config: from_attributes = True
 
 
 # ---------- todos ----------
@@ -31,18 +36,24 @@ class TodoBase(BaseModel):
 class TodoCreate(TodoBase):
     pass
 
+class TodoUpdate(BaseModel):
+    title: Optional[str] = None
+    completed: Optional[bool] = None
+    timestamp: Optional[str] = None
+
 class TodoOut(TodoBase):
     id: int
-    class Config: orm_mode = True
+    class Config: from_attributes = True
 
 
 # ---------- moods ----------
 
 class MoodCreate(BaseModel):
-    mood: str           # emoji or text
+    mood: MoodEnum               
 
 class MoodOut(BaseModel):
     id: int
-    mood: str
+    mood: MoodEnum
     date: date
-    class Config: orm_mode = True
+    class Config: from_attributes = True
+
