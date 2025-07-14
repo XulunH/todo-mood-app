@@ -1,3 +1,6 @@
+# IDE junk
+.idea/
+
 # === PYTHON ===
 __pycache__/
 *.py[cod]
