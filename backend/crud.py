@@ -60,6 +60,21 @@ def get_mood_by_date(db: Session, user: models.User, day: date):
           .first()
     )
 
+# ---------- user ----------
 
+def create_user(db: Session, user_in: schemas.UserCreate) -> models.User:
+    db_user = models.User(
+        email=user_in.email,
+        hashed_password=auth.hash_password(user_in.password)
+    )
+    db.add(db_user)
+    db.commit(); db.refresh(db_user)
+    return db_user
+
+def authenticate(db: Session, email: str, password: str) -> models.User | None:
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if user and auth.verify_password(password, user.hashed_password):
+        return user
+    return None
 
 
