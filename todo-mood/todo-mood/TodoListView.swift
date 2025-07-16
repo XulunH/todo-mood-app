@@ -85,19 +85,25 @@ struct TodoRowView: View {
             }
             .buttonStyle(PlainButtonStyle())
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(todo.title)
-                    .strikethrough(todo.completed)
-                    .foregroundColor(todo.completed ? .gray : .primary)
-                Text(formatDate(todo.timestamp))
-                    .font(.caption)
-                    .foregroundColor(.gray)
+            ZStack {
+                // Transparent tap area for the whole row except the checkbox
+                Rectangle().foregroundColor(.clear)
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(todo.title)
+                            .strikethrough(todo.completed)
+                            .foregroundColor(todo.completed ? .gray : .primary)
+                        Text(formatDate(todo.timestamp))
+                            .font(.caption)
+                            .foregroundColor(isPast(todo.timestamp) ? .red : .gray)
+                    }
+                    Spacer()
+                }
             }
             .contentShape(Rectangle())
             .onTapGesture {
                 onTap?()
             }
-            Spacer()
         }
         .padding(.vertical, 4)
     }
@@ -111,5 +117,13 @@ struct TodoRowView: View {
             return displayFormatter.string(from: date)
         }
         return timestamp
+    }
+
+    private func isPast(_ timestamp: String) -> Bool {
+        let formatter = ISO8601DateFormatter()
+        if let date = formatter.date(from: timestamp) {
+            return date < Date()
+        }
+        return false
     }
 }

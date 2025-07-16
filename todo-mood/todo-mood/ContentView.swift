@@ -9,11 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var authManager = AuthManager()
-    
+
     var body: some View {
         Group {
             if authManager.isAuthenticated {
-                TodoListView(authManager: authManager)
+                TabView {
+                    TodoListView(authManager: authManager)
+                        .tabItem {
+                            Image(systemName: "checklist")
+                            Text("Todos")
+                        }
+                    MoodView(authManager: authManager)
+                        .tabItem {
+                            Image(systemName: "face.smiling")
+                            Text("Mood")
+                        }
+                }
             } else {
                 LoginView()
             }

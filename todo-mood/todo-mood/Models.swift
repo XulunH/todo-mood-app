@@ -44,6 +44,23 @@ struct TodoUpdate: Codable {
     let timestamp: String?
 }
 
+// MARK: - Mood Models
+
+enum MoodEnum: String, CaseIterable, Codable, Identifiable {
+    case terrible, bad, ok, good, excellent
+    var id: String { self.rawValue }
+}
+
+struct MoodCreate: Codable {
+    let mood: MoodEnum
+}
+
+struct MoodOut: Codable, Identifiable {
+    let id: Int
+    let mood: MoodEnum
+    let date: String // Use String for ISO date
+}
+
 // MARK: - API Response Models
 struct APIError: Codable {
     let detail: String

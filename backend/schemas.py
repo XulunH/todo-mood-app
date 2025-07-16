@@ -6,13 +6,11 @@ from enum import Enum
 # ---------- mood enum ----------
 
 class MoodEnum(str, Enum):
-    happy     = "happy"
-    sad       = "sad"
-    angry     = "angry"
-    excited   = "excited"
-    calm      = "calm"
-    tired     = "tired"
-    stressed  = "stressed"
+    terrible  = "terrible"
+    bad       = "bad"
+    ok        = "ok"
+    good      = "good"
+    excellent = "excellent"
 
 # ---------- auth ----------
 
