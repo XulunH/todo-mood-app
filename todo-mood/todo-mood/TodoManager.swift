@@ -36,10 +36,10 @@ class TodoManager: ObservableObject {
         isLoading = false
     }
 
-    func addTodo(title: String) async {
+    func addTodo(title: String, date: Date) async {
         guard let token = authManager.getAuthToken() else { return }
 
-        let timestamp = ISO8601DateFormatter().string(from: Date())
+        let timestamp = ISO8601DateFormatter().string(from: date)
         let todoData = TodoCreate(title: title, completed: false, timestamp: timestamp)
 
         do {
@@ -51,16 +51,29 @@ class TodoManager: ObservableObject {
         }
     }
 
-    func updateTodo(_ todo: Todo, title: String? = nil, completed: Bool? = nil) async {
+    // Update completed status only (checkbox)
+    func updateTodo(_ todo: Todo, completed: Bool) async {
         guard let token = authManager.getAuthToken() else { return }
-
-        let timestamp = ISO8601DateFormatter().string(from: Date())
-        let updateData = TodoUpdate(title: title, completed: completed, timestamp: timestamp)
-
+        let updateData = TodoUpdate(title: nil, completed: completed, timestamp: nil)
         do {
             let jsonData = try JSONEncoder().encode(updateData)
             let updatedTodo: Todo = try await networkService.fetchWithAuth("/todos/\(todo.id)", token: token, method: "PATCH", body: jsonData)
+            if let index = todos.firstIndex(where: { $0.id == todo.id }) {
+                todos[index] = updatedTodo
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
 
+    // Update title and/or timestamp (for edit screen)
+    func updateTodo(_ todo: Todo, title: String?, date: Date?) async {
+        guard let token = authManager.getAuthToken() else { return }
+        let timestamp = date != nil ? ISO8601DateFormatter().string(from: date!) : nil
+        let updateData = TodoUpdate(title: title, completed: nil, timestamp: timestamp)
+        do {
+            let jsonData = try JSONEncoder().encode(updateData)
+            let updatedTodo: Todo = try await networkService.fetchWithAuth("/todos/\(todo.id)", token: token, method: "PATCH", body: jsonData)
             if let index = todos.firstIndex(where: { $0.id == todo.id }) {
                 todos[index] = updatedTodo
             }

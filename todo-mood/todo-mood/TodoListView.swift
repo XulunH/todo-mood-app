@@ -11,6 +11,7 @@ struct TodoListView: View {
     @StateObject private var todoManager: TodoManager
     @State private var newTodoTitle = ""
     @State private var showingAddTodo = false
+    @State private var editingTodo: Todo? = nil
 
     init(authManager: AuthManager) {
         self._todoManager = StateObject(wrappedValue: TodoManager(authManager: authManager))
@@ -25,7 +26,9 @@ struct TodoListView: View {
                 } else {
                     List {
                         ForEach(todoManager.todos) { todo in
-                            TodoRowView(todo: todo, todoManager: todoManager)
+                            TodoRowView(todo: todo, todoManager: todoManager) {
+                                editingTodo = todo
+                            }
                         }
                         .onDelete(perform: deleteTodos)
                     }
@@ -41,6 +44,9 @@ struct TodoListView: View {
             }
             .sheet(isPresented: $showingAddTodo) {
                 AddTodoView(todoManager: todoManager)
+            }
+            .sheet(item: $editingTodo) { todo in
+                EditTodoListView(todo: todo, todoManager: todoManager)
             }
             .refreshable {
                 await todoManager.fetchTodos()
@@ -65,6 +71,7 @@ struct TodoListView: View {
 struct TodoRowView: View {
     let todo: Todo
     let todoManager: TodoManager
+    var onTap: (() -> Void)? = nil
 
     var body: some View {
         HStack {
@@ -81,6 +88,9 @@ struct TodoRowView: View {
             Text(todo.title)
                 .strikethrough(todo.completed)
                 .foregroundColor(todo.completed ? .gray : .primary)
+                .onTapGesture {
+                    onTap?()
+                }
 
             Spacer()
 
