@@ -15,7 +15,7 @@ models.Base.metadata.create_all(bind=database.engine)
 app = FastAPI(
     title="Todo + Mood API",
     version="0.1.0",
-    description="Backend for the Daily Todo + Mood Tracker interview project",
+    description="Backend for the Daily Todo + Mood Tracker interview project. Built by Xulun Huang using FastAPI, SQLAlchemy, and JWT authentication.",
 )
 
 
@@ -32,7 +32,7 @@ app.add_middleware(
 # ──────────────────────────────────────────────────────────────
 @app.get("/")
 def health_check():
-    return {"status": "healthy", "message": "Todo + Mood API is running"}
+    return {"status": "healthy", "message": "This API is built by Xulun Huang"}
 
 # ──────────────────────────────────────────────────────────────
 # Auth routes
