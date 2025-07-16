@@ -24,6 +24,11 @@ struct ContentView: View {
                             Image(systemName: "face.smiling")
                             Text("Mood")
                         }
+                    AccountView(authManager: authManager)
+                        .tabItem {
+                            Image(systemName: "person.circle")
+                            Text("Account")
+                        }
                 }
             } else {
                 LoginView()

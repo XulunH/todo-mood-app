@@ -20,18 +20,13 @@ struct TodoListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if todoManager.isLoading {
-                    ProgressView("Loading todos...")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    List {
-                        ForEach(todoManager.todos) { todo in
-                            TodoRowView(todo: todo, todoManager: todoManager) {
-                                editingTodo = todo
-                            }
+                List {
+                    ForEach(todoManager.todos) { todo in
+                        TodoRowView(todo: todo, todoManager: todoManager) {
+                            editingTodo = todo
                         }
-                        .onDelete(perform: deleteTodos)
                     }
+                    .onDelete(perform: deleteTodos)
                 }
             }
             .navigationTitle("My Todos")

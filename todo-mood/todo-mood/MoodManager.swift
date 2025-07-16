@@ -23,23 +23,34 @@ class MoodManager: ObservableObject {
         _ = try await networkService.fetchWithAuth("/moods/today", token: token, method: "POST", body: jsonData) as MoodOut
     }
 
+    func updateTodayMoodLocally(_ mood: MoodEnum) {
+        let today = DateFormatter.yyyyMMdd.string(from: Date())
+        moodsByDate[today] = mood
+    }
+
     @Published var moodsByDate: [String: MoodEnum] = [:] // "yyyy-MM-dd": MoodEnum
 
     func fetchMoodsForMonth(year: Int, month: Int) async {
-        moodsByDate = [:]
         let calendar = Calendar.current
         let range = calendar.range(of: .day, in: .month, for: calendar.date(from: DateComponents(year: year, month: month, day: 1))!)!
+
+        // Create a temporary dictionary to avoid clearing the existing one
+        var newMoodsByDate: [String: MoodEnum] = [:]
+
         for day in range {
             let date = calendar.date(from: DateComponents(year: year, month: month, day: day))!
             let dateString = DateFormatter.yyyyMMdd.string(from: date)
             do {
                 if let mood = try await fetchMood(for: dateString) {
-                    moodsByDate[dateString] = mood.mood
+                    newMoodsByDate[dateString] = mood.mood
                 }
             } catch {
                 // No mood for this day
             }
         }
+
+        // Update the published property once with all the data
+        moodsByDate = newMoodsByDate
     }
 
     func fetchMood(for date: String) async throws -> MoodOut? {
