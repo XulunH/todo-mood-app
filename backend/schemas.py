@@ -49,7 +49,7 @@ class TodoOut(TodoBase):
 # ---------- moods ----------
 
 class MoodCreate(BaseModel):
-    mood: MoodEnum               
+    mood: MoodEnum
 
 class MoodOut(BaseModel):
     id: int
@@ -57,3 +57,6 @@ class MoodOut(BaseModel):
     date: date
     class Config: from_attributes = True
 
+class Token(BaseModel):
+   access_token: str
+   token_type: str
