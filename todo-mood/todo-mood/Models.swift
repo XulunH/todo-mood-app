@@ -65,3 +65,12 @@ struct MoodOut: Codable, Identifiable {
 struct APIError: Codable {
     let detail: String
 }
+
+extension DateFormatter {
+    static let yyyyMMdd: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return formatter
+    }()
+}

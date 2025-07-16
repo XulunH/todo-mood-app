@@ -5,6 +5,7 @@ struct MoodView: View {
     @State private var selectedMood: MoodEnum? = nil
     @State private var isLoading = false
     @State private var errorMessage: String? = nil
+    @State private var currentMonth: Date = Date()
 
     init(authManager: AuthManager) {
         self._moodManager = ObservedObject(wrappedValue: MoodManager(authManager: authManager))
@@ -43,6 +44,7 @@ struct MoodView: View {
                         }
                     }
                 }
+                MoodCalendarView(currentMonth: $currentMonth, moodsByDate: moodManager.moodsByDate, icon: icon)
                 if let errorMessage = errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
@@ -54,6 +56,7 @@ struct MoodView: View {
             .onAppear {
                 Task {
                     await loadTodayMood()
+                    await fetchMonthMoods()
                 }
             }
         }
@@ -61,11 +64,11 @@ struct MoodView: View {
 
     private func icon(for mood: MoodEnum) -> String {
         switch mood {
-        case .terrible: return "😡" // very red, mouth very down
-        case .bad: return "🙁"      // a little red, mouth a little down
-        case .ok: return "😐"       // yellow, neutral mouth
-        case .good: return "🙂"     // green, mouth a little up
-        case .excellent: return "😄"// very green, mouth very up
+        case .terrible: return "😡"
+        case .bad: return "🙁"
+        case .ok: return "😐"
+        case .good: return "🙂"
+        case .excellent: return "😄"
         }
     }
 
@@ -92,14 +95,21 @@ struct MoodView: View {
     }
 
     private func setMood(_ mood: MoodEnum) async {
-        isLoading = true
+        // Don't show loading state for mood selection to avoid screen refresh
         errorMessage = nil
         do {
             try await moodManager.setTodayMood(mood)
             selectedMood = mood
+            // Refresh the calendar immediately after setting mood
+            await fetchMonthMoods()
         } catch {
             errorMessage = error.localizedDescription
         }
-        isLoading = false
+    }
+    private func fetchMonthMoods() async {
+        let calendar = Calendar.current
+        let comps = calendar.dateComponents([.year, .month], from: currentMonth)
+        guard let year = comps.year, let month = comps.month else { return }
+        await moodManager.fetchMoodsForMonth(year: year, month: month)
     }
 }

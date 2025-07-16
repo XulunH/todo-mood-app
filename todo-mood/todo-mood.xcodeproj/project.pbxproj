@@ -10,6 +10,7 @@
 		A15C5C2F2E27857000463375 /* EditTodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15C5C2E2E27857000463375 /* EditTodoList.swift */; };
 		A15C5C322E28376200463375 /* MoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15C5C302E28376200463375 /* MoodManager.swift */; };
 		A15C5C332E28376200463375 /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15C5C312E28376200463375 /* MoodView.swift */; };
+		A15C5C352E283C2F00463375 /* MoodCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15C5C342E283C2F00463375 /* MoodCalendarView.swift */; };
 		A1BA87812E2763EF006AE746 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BA87802E2763EF006AE746 /* Models.swift */; };
 		A1BA87832E2767A1006AE746 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BA87822E2767A0006AE746 /* NetworkService.swift */; };
 		A1BA87852E2767E7006AE746 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BA87842E2767E7006AE746 /* AuthManager.swift */; };
@@ -47,6 +48,7 @@
 		A15C5C2E2E27857000463375 /* EditTodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTodoList.swift; sourceTree = "<group>"; };
 		A15C5C302E28376200463375 /* MoodManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodManager.swift; sourceTree = "<group>"; };
 		A15C5C312E28376200463375 /* MoodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
+		A15C5C342E283C2F00463375 /* MoodCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodCalendarView.swift; sourceTree = "<group>"; };
 		A1BA87802E2763EF006AE746 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		A1BA87822E2767A0006AE746 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		A1BA87842E2767E7006AE746 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		A1DFD67F2E275662009BB352 /* todo-mood */ = {
 			isa = PBXGroup;
 			children = (
+				A15C5C342E283C2F00463375 /* MoodCalendarView.swift */,
 				A15C5C302E28376200463375 /* MoodManager.swift */,
 				A15C5C312E28376200463375 /* MoodView.swift */,
 				A1DFD6802E275662009BB352 /* todo_moodApp.swift */,
@@ -299,6 +302,7 @@
 				A1BA87852E2767E7006AE746 /* AuthManager.swift in Sources */,
 				A15C5C322E28376200463375 /* MoodManager.swift in Sources */,
 				A1BA87892E2772EA006AE746 /* TodoManager.swift in Sources */,
+				A15C5C352E283C2F00463375 /* MoodCalendarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
