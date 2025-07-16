@@ -28,6 +28,13 @@ app.add_middleware(
 )
 
 # ──────────────────────────────────────────────────────────────
+# root check 
+# ──────────────────────────────────────────────────────────────
+@app.get("/")
+def health_check():
+    return {"status": "healthy", "message": "Todo + Mood API is running"}
+
+# ──────────────────────────────────────────────────────────────
 # Auth routes
 # ──────────────────────────────────────────────────────────────
 @app.post("/register", response_model=schemas.UserOut, status_code=201)
@@ -130,6 +137,23 @@ def get_mood_by_day(
 ):
     """
     ISO‑date path param e.g. 2025-07-10
-    Returns that day’s mood or null.
+    Returns that day's mood or null.
     """
     return crud.get_mood_by_date(db, current, day)
+
+# ──────────────────────────────────────────────────────────────
+# Production startup configuration
+# ──────────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    
+    # Get port from environment variable (Render sets this)
+    port = int(os.environ.get("PORT", 8000))
+    
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",  # Required for Render to route traffic
+        port=port,
+        reload=False     # Disable reload in production
+    )
