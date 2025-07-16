@@ -85,18 +85,19 @@ struct TodoRowView: View {
             }
             .buttonStyle(PlainButtonStyle())
 
-            Text(todo.title)
-                .strikethrough(todo.completed)
-                .foregroundColor(todo.completed ? .gray : .primary)
-                .onTapGesture {
-                    onTap?()
-                }
-
+            VStack(alignment: .leading, spacing: 2) {
+                Text(todo.title)
+                    .strikethrough(todo.completed)
+                    .foregroundColor(todo.completed ? .gray : .primary)
+                Text(formatDate(todo.timestamp))
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                onTap?()
+            }
             Spacer()
-
-            Text(formatDate(todo.timestamp))
-                .font(.caption)
-                .foregroundColor(.gray)
         }
         .padding(.vertical, 4)
     }
