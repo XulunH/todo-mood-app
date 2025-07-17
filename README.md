@@ -45,6 +45,12 @@ backend/
 - **OAuth2PasswordBearer** in Authorization header
 - **Password hashing** with bcrypt
 - **User data isolation**
+  
+## TODO List
+- **can create/update task and timestamp freely** 
+- **Timestamp in red color once past current date&time** 
+- **Delete by swipe**
+- **Checkbox enabled**
 
 ## Mood Design
 - **5 mood options:** terrible, bad, ok, good, excellent
