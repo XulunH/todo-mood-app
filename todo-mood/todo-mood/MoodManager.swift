@@ -24,7 +24,7 @@ class MoodManager: ObservableObject {
     }
 
     func updateTodayMoodLocally(_ mood: MoodEnum) {
-        let today = DateFormatter.yyyyMMdd.string(from: Date())
+        let today = DateFormatter.yyyyMMddLocal.string(from: Date())
         moodsByDate[today] = mood
     }
 
@@ -39,7 +39,7 @@ class MoodManager: ObservableObject {
 
         for day in range {
             let date = calendar.date(from: DateComponents(year: year, month: month, day: day))!
-            let dateString = DateFormatter.yyyyMMdd.string(from: date)
+            let dateString = DateFormatter.yyyyMMddLocal.string(from: date)
             do {
                 if let mood = try await fetchMood(for: dateString) {
                     newMoodsByDate[dateString] = mood.mood

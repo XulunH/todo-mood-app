@@ -14,7 +14,7 @@ struct ContentView: View {
         Group {
             if authManager.isAuthenticated {
                 TabView {
-                    TodoListView(authManager: authManager)
+                TodoListView(authManager: authManager)
                         .tabItem {
                             Image(systemName: "checklist")
                             Text("Todos")

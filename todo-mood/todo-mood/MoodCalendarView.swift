@@ -40,7 +40,7 @@ struct MoodCalendarView: View {
                 ForEach(days) { day in
                     Group {
                         if day.isCurrentMonth {
-                            let dateString = DateFormatter.yyyyMMdd.string(from: day.date)
+                            let dateString = DateFormatter.yyyyMMddLocal.string(from: day.date)
                             let isToday = Calendar.current.isDate(day.date, inSameDayAs: Date())
                             VStack(spacing: 4) {
                                 if let mood = moodsByDate[dateString] {

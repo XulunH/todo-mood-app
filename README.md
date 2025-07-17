@@ -55,9 +55,5 @@ backend/
 ## Live Demo
 https://todo-mood-backend.onrender.com
 
-## Local Setup
-```bash
-pip install -r requirements.txt
-python main.py
-```
+
 
